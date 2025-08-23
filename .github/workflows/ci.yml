@@ -21,6 +21,14 @@ jobs:
         run: |
           npm ci
           npm run build
+      - name: Ensure /var/www/static exists
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            mkdir -p /var/www/static
 
       - name: Deploy via Rsync
         uses: burnett01/rsync-deployments@5.2
