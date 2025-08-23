@@ -21,22 +21,39 @@ jobs:
         run: |
           npm ci
           npm run build
-      - name: Ensure /var/www/static exists
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            mkdir -p /var/www/static
 
-      - name: Deploy via Rsync
-        uses: burnett01/rsync-deployments@5.2
-        with:
-          switches: -avzr --delete
-          path: out/
-          remote_path: /var/www/static
-          remote_host: ${{ secrets.SERVER_HOST }}
-          remote_user: ${{ secrets.SERVER_USER }}
-          remote_key: ${{ secrets.SERVER_SSH_KEY }}
+      - name: Deploy to Nginx container
+        env:
+          SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          echo "$SERVER_SSH_KEY" > private_key.pem
+          chmod 600 private_key.pem
 
+          # Copy build files to server first (temp dir)
+          scp -i private_key.pem -o StrictHostKeyChecking=no -r out/ ${SERVER_USER}@${SERVER_HOST}:/tmp/static_build
+
+          # SSH into server and copy into Nginx container
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_HOST} << 'EOF'
+            set -e
+
+            # Find the nginx container
+            NGINX_CONTAINER=$(docker ps --filter "name=nginx" --format "{{.ID}}" | head -n 1)
+
+            if [ -z "$NGINX_CONTAINER" ]; then
+              echo "❌ No running Nginx container found!"
+              exit 1
+            fi
+
+            echo "✅ Found Nginx container: $NGINX_CONTAINER"
+
+            # Remove old static files inside the container
+            docker exec -i $NGINX_CONTAINER rm -rf /var/www/static/*
+
+            # Copy new static files into the container
+            docker cp /tmp/static_build/. $NGINX_CONTAINER:/var/www/static/
+
+            # Cleanup
+            rm -rf /tmp/static_build
+          EOF
