@@ -1,5 +1,8 @@
+"use client";
 import { Button, ButtonLink } from "@/components/ui/button";
+import Lottie from "lottie-react";
 import { ArrowRight, Clock, Shield, Zap } from "lucide-react";
+import animationData from "../public/welcome.json";
 
 export function HeroSection() {
   return (
@@ -66,10 +69,15 @@ export function HeroSection() {
 
           {/* Hero Image */}
           <div className="relative">
-            <img
+            {/* <img
               src="https://storage.googleapis.com/koomovers/delivery-truck.png"
               alt="Koo Movers delivery rider"
+              /> */}
+
+            <Lottie
               className="w-full h-auto"
+              animationData={animationData}
+              loop={true}
             />
           </div>
         </div>
