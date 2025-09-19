@@ -24,7 +24,7 @@ export function TestimonialsSection() {
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const res = await fetch("http://api.uat.koomoverssolutions.co.ke/feedback/list/latest");
+        const res = await fetch("https://api.uat.koomoverssolutions.co.ke/feedback/list/latest");
         const data: Feedback[] = await res.json();
 
         // transform role dynamically based on is_corporate
