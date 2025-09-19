@@ -129,10 +129,10 @@ export default function TermsPage() {
                 <p>For inquiries, complaints or feedback:</p>
                 <ul className="list-none space-y-1">
                   <li>
-                    <strong>Email:</strong> support@koomoverssolutions.co.ke
+                    <strong>Email:</strong> info@koomoverssolutions.co.ke
                   </li>
                   <li>
-                    <strong>Phone:</strong> 0797459368 / 0797459276
+                    <strong>Phone:</strong> 0798853066 / 0798853269
                   </li>
                 </ul>
               </CardContent>

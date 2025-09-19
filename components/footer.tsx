@@ -16,7 +16,7 @@ export function Footer() {
                   width={150}
                   height={70}
                   alt="Koo Movers Logo"
-                  src="https://storage.googleapis.com/koomovers/koomovers-v1-sm.png"
+                  src="https://storage.googleapis.com/koomovers/koomovers-sm.png"
                 />
               </div>
             </Link>
@@ -91,13 +91,13 @@ export function Footer() {
               <li className="flex items-center space-x-2 text-sm">
                 <Phone className="h-4 w-4 text-primary" />
                 <span className="text-background/80">
-                  0797459368 / 0797459276
+                  0798853066 / 0798853269
                 </span>
               </li>
               <li className="flex items-center space-x-2 text-sm">
                 <Mail className="h-4 w-4 text-primary" />
                 <span className="text-background/80">
-                  support@koomoverssolutions.co.ke
+                  info@koomoverssolutions.co.ke
                 </span>
               </li>
               <li className="flex items-center space-x-2 text-sm">

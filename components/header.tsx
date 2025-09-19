@@ -41,7 +41,7 @@ export function Header({ isHome }: { isHome?: boolean }) {
                 width={150}
                 height={70}
                 alt="Koo Movers Logo"
-                src="https://storage.googleapis.com/koomovers/koomovers-v1-sm.png"
+                src="https://storage.googleapis.com/koomovers/koomovers-sm.png"
               />
             </div>
           </Link>
